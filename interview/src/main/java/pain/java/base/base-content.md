@@ -1,4 +1,6 @@
+---
 title: Java基础内容
+---
 
 # 一、Java基础
 ## 1.1 何为编程
@@ -22,13 +24,13 @@ Java EE 以前称为 J2EE。企业版本帮助开发和部署可移植、见状�
 （service-oriented architecture, SOA）和Web2.0应用程序。2018年2月，Eclipse 宣布正式将 JavaEE 更名
 为JakartaEE
 
-### Java ME (J2ME， Java 2 platform Micro Edition, 微型版)
+### (3)Java ME (J2ME， Java 2 platform Micro Edition, 微型版)
 Java ME 以前称为 J2ME。Java ME 为在移动设备和嵌入式设备（比如手机、PDA、电视机顶盒和打印机）上运行的
 应用程序提供一个健壮且灵活的环境。Java ME 包括灵活的用户界面、健壮的安全模型、许多内置的网络协议以及对
 可以动态下载的连网和离线应用程序的丰富支持。基于Java ME 规范的应用程序只需编写一次，就可以用于许多设备，
 而且可以利用每个设备的本机功能。
 
-### todo 
+### (4) todo 
 之后的jdk1.8 jdk11, jdk17, jdk21, jdk25 都是重要的版本
 
 4.JVM、JRE 和 JDK 的关系
