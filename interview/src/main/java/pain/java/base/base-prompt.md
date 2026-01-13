@@ -1,4 +1,6 @@
-星球链接：https://articles.zsxq.com/id_8i2wwu77ukog.html
+title: Java基础
+
+星球链接：https://articles.zsxq.com/id_8i2wwu77ukog.html <br>
 
 # 一、Java概述
 1.何为编程<br>
