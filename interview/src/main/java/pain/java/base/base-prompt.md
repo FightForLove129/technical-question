@@ -1,5 +1,6 @@
-title: Java基础
-
+---
+title: Java基础提示词
+---
 星球链接：https://articles.zsxq.com/id_8i2wwu77ukog.html <br>
 
 # 一、Java概述
