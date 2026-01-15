@@ -605,3 +605,118 @@ javax逐渐的扩展成为JavaAPI的组成部分。但是，将扩展从javax包
 最终会破坏一堆现有的代码。因此，最终决定javax包将成为标准API的一部分。<br>
 所以，实际上java和javax没有区别。这都是一个名字。
 
+# 四、IO流
+## java中IO流分为几种?
+- 按照流的流向分，可以分为输入流和输出流;
+- 按照操作单元划分，可以划分为字节流和字符流;
+- 按照流的角色划分为节点流和处理流。
+- 
+JavaIO流共涉及40多个类，这些类看上去很杂乱，但实际上很有规则，而且彼此之间存在非常紧密的联系，JavaIO流的40多个类
+都是从如下4个抽象类基类中派生出来的。<br><br>
+- InputStream/Reader:所有的输入流的基类，前者是字节输入流，后者是字符输入流。
+- OutputStream/Writer:所有输出流的基类，前者是字节输出流，后者是字符输出流。
+
+<br>
+按操作方式分类结构图:
+<img src="img/img-05.png" alt="">
+
+<br>
+按操作对象分类结构图:
+<img src="img/img-06.png" alt="">
+
+## BIO,NIO,AIO 有什么区别?
+简答
+- BIO:Block IO 同步阻塞式IO，就是我们平常使用的传统IO，它的特点是模式简单使用方便，并发处理能力低。
+- NO:New IO（也有人称为Non-Blocking IO）同步非阻塞IO，是传统IO的升级，客户端和服务器端通过Channel(通道)通讯，实现了多路复用。
+- AIO:Asynchronous IO是NIO的升级，也叫 NIO2，实现了异步非堵塞IO，异步IO的操作基于事件和回调机制。
+
+详细回答
+- BIO(BlockingIO):同步阻塞I/O模式，数据的读取写入必须阻塞在一个线程内等待其完成。在活动连接数不是特别高(小于单机1000)的情
+况下，这种模型是比较不错的，可以让每一个连接专注于自己的I/O并且编程模型简单，也不用过多考虑系统的过载、限流等问题。线程池本
+身就是一个天然的漏斗，可以缓冲一些系统处理不了的连接或请求。但是，当面对十万甚至百万级连接的时候，传统的BIO模型是无能为力的。
+因此，我们需要一种更高效的I/O处理模型来应对更高的并发量。
+
+- NIO(New O):NIO是一种同步非阻塞的VO模型，在Java1.4中引I入了NIO框架,对应java.nio包，提供了Channel,Selector,Buffer等抽象。
+NIO中的N可以理解为Non-blocking，不单纯是New。它支持面向缓冲的，基于通道的I/O操作方法。 NIO提供了与传统BIO模型中的Socket和
+ServerSocket相对应的SocketChannel 和 ServerSocketChannel 两种不同的套接字通道实现,两种通道都支持阻塞和非阻塞两种模式。
+阻塞模式使用就像传统中的支持一样，比较简单，但是性能和可靠性都不好;非阻塞模式正好与之相反。对于低负载、低并发的应用程序，
+可以使用同步阻塞IO来提升开发速率和更好的维护性;对于高负载、高并发的(网络)应用，应使用NIO的非阻塞模式来开发
+
+- AIO(Asynchronous IO): AIO也就是NIO2。在Java7中引入了NIO的改进版 NIO2,它是异步非阻塞的IO模型。异步1O是基于事件和
+回调机制实现的，也就是应用操作之后会直接返回，不会堵塞在那里，当后台处理完成，操作系统会通知相应的线程进行后续的操作。
+AIO是异步IO的缩写，虽然NIO在网络操作中，提供了非阻塞的方法，但是NIO的IO行为还是同步的。对于NIO来说，我们的业务线程是在
+IO操作准备好时，得到通知，接着就由这个线程自行进行IO操作，IO操作本身是同步的。查阅网上相关资料，我发现就目前来说AIO的应用还
+不是很广泛，Netty之前也尝试使用过AIO，不过又放弃了。
+  
+## Files的常用方法都有哪些?
+- Files.exists():检测文件路径是否存在。
+- Files.createFile():创建文件。
+- Files.createDirectory():创建文件夹。
+- Files.delete():删除一个文件或目录。
+- Files.copy():复制文件。
+- Files.move():移动文件。
+- Files.size():查看文件个数。
+- Files.read():读取文件。
+- Files.write():写入文件。
+
+# 五、反射
+## 什么是反射机制?
+JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法;对于任意一个对象，都能够调用它的任意一个方法
+和属性;这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。
+
+## 静态编译和动态编译
+静态编译:在编译时确定类型，绑定对象 <br>
+动态编译:运行时确定类型，绑定对象
+
+## 反射机制优缺点
+- 优点:运行期类型的判断，动态加载类，提高代码灵活度。
+- 缺点:性能瓶颈:反射相当于一系列解释操作，通知JVM要做的事情，性能比直接的java代码要慢很多。
+
+## 反射机制的应用场景有哪些?
+反射是框架设计的灵魂。<br><br>
+
+在我们平时的项目开发过程中，基本上很少会直接使用到反射机制，但这不能说明反射机制没有用，实际上有很多设计、
+开发都与反射机制有关，例如模块化的开发，通过反射去调用对应的字节码;动态代理设计模式也采用了反射机制，还有
+我们日常使用的Spring/Hibernate等框架也大量使用到了反射机制。<br><br>
+
+举例:
+1.我们在使用JDBC连接数据库时使用Class.forName()通过反射加载数据库的驱动程序;<br>
+2.Spring框架也用到很多反射机制，最经典的就是xml的配置模式。<br><br>
+
+Spring通过XML配置模式装载Bean的过程:<br>
+1)将程序内所有XML或Properties配置文件加载入内存中;<br>
+2)Java类里面解析xml或properties里面的内容，得到对应实体类的字节码字符串以及相关的属性信息;<br>
+3)使用反射机制，根据这个字符串获得某个类的Class实例;<br>
+4)动态配置实例的属性 <br>
+
+## Java获取反射的三种方法
+1.通过New对象实现反射机制（我都new了，还反射？）<br>
+2.通过路径实现反射机制 <br>
+3.通过类名实现反射机制(拿到类名了，还反射？)
+
+```java
+public class Student{
+    private int id;
+    String name;
+    protected boolean sex;
+    public float score;
+}
+
+public class Get{
+    // 获取反射机制的三种方式
+    public static void main() throws ClassNotFoundException{
+        // 方式一
+        Student stu = new Student();
+        Class classobj1 = stu.getClass();
+        System.out.println(classobj1.getClass());
+        
+        // 方式二 (所在通过路径-相对路径)
+        Class classobj2 = Class.forName("fanshe.Student");
+        System.out.println(classobj2.getClass());
+        
+        // 方式三(通过类名)
+        Class classobj3 = Student.class;
+        System.out.println(classobj3.getClass());
+    }
+}
+```
